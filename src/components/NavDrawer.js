@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { AppRegistry, DrawerLayoutAndroid, Text } from "react-native";
-// import { MainView } from "react-native-drawer";
 import {
   Image,
   View,
@@ -31,7 +30,6 @@ class NavDrawer extends Component {
   };
 
   closeDrawer = () => {
-    // this._drawer._root.close()
     this.setState({
       drawerVisible: !this.state.drawerVisible,
       active: !this.state.active
@@ -39,13 +37,6 @@ class NavDrawer extends Component {
   };
 
   updateState = () => {
-    // Alert.alert(
-    //   "drawerVisible " +
-    //     this.state.drawerVisible +
-    //     "\nActive " +
-    //     this.state.active
-    // );
-
     this.setState({
       drawerVisible: !this.state.drawerVisible,
       active: !this.state.active
@@ -145,32 +136,25 @@ class NavDrawer extends Component {
           </TouchableOpacity>
         </View>
 
-        {/* <Button onPress={this.updateState} title="Open" color="#841584" /> */}
         <Drawer
           ref={ref => (this._drawer = ref)}
-          type="overlay"
           tapToClose={true}
           openDrawerOffset={0.35}
+          type="overlay"
           panCloseMask={0.2}
           closedDrawerOffset={-3}
           styles={drawerStyles}
+          captureGestures={true}
           content={<ControlPanel />}
           open={this.state.drawerVisible}
           tweenHandler={ratio => ({
-            main: { opacity: (2 - ratio) / 2 }
+            mainOverlay: {
+              backgroundColor: "rgba(71, 71, 71," + ratio / 1.5 + ")"
+            }
           })}
-        />
-
-        {!this.state.drawerVisible && 
-        <View  accessible={true}
-          style={{
-            width: "100%",
-            height: "100%"
-          }}
         >
           <TabBarComponent />
-        </View>
-        }
+        </Drawer>
       </View>
     );
   }
